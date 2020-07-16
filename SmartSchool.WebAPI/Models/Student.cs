@@ -12,7 +12,6 @@ namespace SmartSchool.WebAPI.Models
             this.Name = name;
             this.Surname = surname;
             this.PhoneNumber = phoneNumber;
-
         }
 
         public int Id { get; set; }

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SmartSchool.WebAPI.Controllers
 {
-
     [ApiController]
     [Route("/[controller]")]
     public class TeacherController : ControllerBase

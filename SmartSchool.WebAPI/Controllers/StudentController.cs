@@ -52,6 +52,35 @@ namespace SmartSchool.WebAPI.Controllers
             return Ok(student);
         }
 
+        [HttpPost]
+        public IActionResult Post(Student student)
+        {
+            Student newStudent = new Student();
+            newStudent = student;
+
+            students.Add(newStudent);
+
+            return Ok(student);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Student student)
+        {
+            return Ok(student);
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, Student student)
+        {
+            return Ok(student);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            return Ok();
+        }
+
 
     }
 }
