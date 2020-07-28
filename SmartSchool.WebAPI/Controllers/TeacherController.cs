@@ -36,6 +36,8 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Teacher teacher)
         {
+            if (teacher == null) return BadRequest("Teacher shouldn't be empty.");
+
             context.Add(teacher);
 
             context.SaveChangesAsync();

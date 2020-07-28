@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
 using SmartSchool.WebAPI.Models;
 
@@ -28,7 +29,7 @@ namespace SmartSchool.WebAPI.Controllers
         {
             var student = context.Students.FirstOrDefault(s => s.Id == id);
 
-            if (student == null) return BadRequest("Student id not found.");
+            if (student == null) return BadRequest("Student Id not found.");
 
             return Ok(student);
         }
@@ -36,7 +37,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Student student)
         {
-            if (student == null) return BadRequest("Student must be not empty.");
+            if (student == null) return BadRequest("Student shouldn't be empty.");
 
             context.Students.Add(student);
 
@@ -47,21 +48,31 @@ namespace SmartSchool.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Student student)
+        public IActionResult Put(int id, Student newStudentData)
         {
-            return Ok();
-        }
+            var student = context.Students.AsNoTracking().FirstOrDefault(s => s.Id == id);
 
-        [HttpPatch("{id}")]
-        public IActionResult Patch(int id, Student student)
-        {
-            return Ok();
+            if (student == null) return BadRequest("Student Id is not found.");
+
+            context.Update(newStudentData);
+
+            context.SaveChangesAsync();
+
+            return Ok(newStudentData);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Ok();
+            var student = context.Students.FirstOrDefault(s => s.Id == id);
+
+            if (student == null) return BadRequest("Student Id is not found.");
+
+            context.Remove(student);
+
+            context.SaveChangesAsync();
+
+            return Ok($"Theacher {id} was deleted.");
         }
 
 
