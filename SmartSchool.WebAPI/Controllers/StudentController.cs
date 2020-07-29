@@ -12,10 +12,12 @@ namespace SmartSchool.WebAPI.Controllers
     public class StudentController : ControllerBase
     {
         private readonly DataContext context;
+        private readonly IRepository repository;
 
-        public StudentController(DataContext context)
+        public StudentController(DataContext context, IRepository repository)
         {
             this.context = context;
+            this.repository = repository;
         }
 
         [HttpGet]
@@ -37,14 +39,14 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Student student)
         {
-            if (student == null) return BadRequest("Student shouldn't be empty.");
+            repository.Add(student);
 
-            context.Students.Add(student);
+            if (this.repository.SaveChanges())
+            {
+                return Ok(student);
+            }
 
-            context.SaveChangesAsync();
-
-            return Ok(student);
-
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
