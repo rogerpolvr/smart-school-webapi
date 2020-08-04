@@ -4,7 +4,7 @@ namespace SmartSchool.WebAPI.Data
     {
         void Add<T>(T Entity) where T : class;
         void Update<T>(T Entity) where T : class;
-        void Delete<T>(T Entity) where T : class;
+        void Remove<T>(T Entity) where T : class;
         bool SaveChanges();
     }
 }

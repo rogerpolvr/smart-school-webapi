@@ -19,7 +19,7 @@ namespace SmartSchool.WebAPI.Data
             this.context.Update(Entity);
         }
 
-        public void Delete<T>(T Entity) where T : class
+        public void Remove<T>(T Entity) where T : class
         {
             this.context.Remove(Entity);
         }
