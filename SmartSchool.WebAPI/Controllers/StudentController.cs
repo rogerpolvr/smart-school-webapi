@@ -56,11 +56,14 @@ namespace SmartSchool.WebAPI.Controllers
 
             if (student == null) return BadRequest("Student Id is not found.");
 
-            context.Update(newStudentData);
+            repository.Update(student);
 
-            context.SaveChangesAsync();
+            if (this.repository.SaveChanges())
+            {
+                return Ok(student);
+            }
 
-            return Ok(newStudentData);
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
@@ -70,11 +73,15 @@ namespace SmartSchool.WebAPI.Controllers
 
             if (student == null) return BadRequest("Student Id is not found.");
 
-            context.Remove(student);
+            repository.Remove(student);
 
-            context.SaveChangesAsync();
+            if (this.repository.SaveChanges())
+            {
+                return Ok($"Student {id} was deleted.");
+            }
 
-            return Ok($"Theacher {id} was deleted.");
+            return BadRequest();
+
         }
 
 
